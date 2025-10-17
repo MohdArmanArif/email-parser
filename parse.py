@@ -34,7 +34,8 @@ def get_msg(folder):
     for i in range(folder.number_of_sub_messages):
         try:
             msg = folder.get_sub_message(i)
-            subject = msg.subject.replace("RE: ", "").replace("Re: ", "").replace("FW: ", "").strip()
+            if msg.subject != None:
+                subject = msg.subject.replace("RE: ", "").replace("Re: ", "").replace("FW: ", "").strip()
             if subject not in messages:
                 messages[subject] = [{
                     "Sender": msg.sender_name,
@@ -97,8 +98,6 @@ def open_pst(file_name):
     pst.close()
 
 if __name__ == "__main__":
-    open_pst("Training Data - Customer Email Subset.pst")
-else:
     if len(sys.argv) > 1:
         file = sys.argv[1]
         open_pst(file)
